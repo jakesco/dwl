@@ -1,7 +1,9 @@
 dwl
+config.h
 *.o
 *-protocol.c
 *-protocol.h
 .ccls-cache
 .cache/
+patches/
 compile_commands.json

@@ -14,7 +14,7 @@ static const Rule rules[] = {
 	/* examples:
 	{ "Gimp",     NULL,       0,            1,           -1 },
 	*/
-	{ "firefox",  NULL,       1 << 8,       0,           -1 },
+	/* { "firefox",  NULL,       1 << 8,       0,           -1 }, */
 };
 
 /* layout(s) */
@@ -38,14 +38,11 @@ static const MonitorRule monrules[] = {
 /* keyboard */
 static const struct xkb_rule_names xkb_rules = {
 	/* can specify fields: rules, model, layout, variant, options */
-	/* example:
 	.options = "ctrl:nocaps",
-	*/
-	.options = NULL,
 };
 
-static const int repeat_rate = 25;
-static const int repeat_delay = 600;
+static const int repeat_rate = 50;
+static const int repeat_delay = 400;
 
 /* Trackpad */
 static const int tap_to_click = 1;
@@ -54,7 +51,7 @@ static const int drag_lock = 1;
 static const int natural_scrolling = 0;
 static const int disable_while_typing = 1;
 static const int left_handed = 0;
-static const int middle_button_emulation = 0;
+static const int middle_button_emulation = 1;
 /* You can choose between:
 LIBINPUT_CONFIG_SCROLL_NO_SCROLL
 LIBINPUT_CONFIG_SCROLL_2FG
@@ -82,10 +79,16 @@ LIBINPUT_CONFIG_ACCEL_PROFILE_FLAT
 LIBINPUT_CONFIG_ACCEL_PROFILE_ADAPTIVE
 */
 static const enum libinput_config_accel_profile accel_profile = LIBINPUT_CONFIG_ACCEL_PROFILE_ADAPTIVE;
-static const double accel_speed = 0.0;
+static const double accel_speed = 0.5;
+
+/* Autostart */
+static const char *const autostart[] = {
+        "sh", "-c", "swaybg --image ~/.config/wallpaper", NULL,
+        NULL /* terminate */
+};
 
 /* If you want to use the windows key change this to WLR_MODIFIER_LOGO */
-#define MODKEY WLR_MODIFIER_ALT
+#define MODKEY WLR_MODIFIER_LOGO
 #define TAGKEYS(KEY,SKEY,TAG) \
 	{ MODKEY,                    KEY,            view,            {.ui = 1 << TAG} }, \
 	{ MODKEY|WLR_MODIFIER_CTRL,  KEY,            toggleview,      {.ui = 1 << TAG} }, \
@@ -96,8 +99,8 @@ static const double accel_speed = 0.0;
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static const char *termcmd[] = { "alacritty", NULL };
-static const char *menucmd[] = { "bemenu-run", NULL };
+static const char *termcmd[] = { "foot", NULL };
+static const char *menucmd[] = { "wofi", "--show", "drun", NULL };
 
 static const Key keys[] = {
 	/* Note that Shift changes certain key codes: c -> C, 2 -> at, etc. */
@@ -112,7 +115,7 @@ static const Key keys[] = {
 	{ MODKEY,                    XKB_KEY_l,          setmfact,       {.f = +0.05} },
 	{ MODKEY,                    XKB_KEY_Return,     zoom,           {0} },
 	{ MODKEY,                    XKB_KEY_Tab,        view,           {0} },
-	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_C,          killclient,     {0} },
+	{ MODKEY,                    XKB_KEY_q,          killclient,     {0} },
 	{ MODKEY,                    XKB_KEY_t,          setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                    XKB_KEY_f,          setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                    XKB_KEY_m,          setlayout,      {.v = &layouts[2]} },
